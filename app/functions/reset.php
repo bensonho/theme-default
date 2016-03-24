@@ -18,6 +18,9 @@ function initialize_wordpress_app() {
   remove_action("wp_head", "wlwmanifest_link");
   remove_action("wp_head", "rsd_link");
 
+  remove_action("wp_head", "print_emoji_detection_script", 7);
+  remove_action("wp_print_styles", "print_emoji_styles");
+
   // Enable primary menu
   register_nav_menus(array("primary" => "primary"));
 
@@ -27,20 +30,16 @@ function initialize_wordpress_app() {
 
 add_action("init", "initialize_wordpress_app", 100);
 
+// Turn off all plugin update warnings
+remove_action("load-update-core.php","wp_update_plugins");
+add_filter("pre_site_transient_update_plugins","__return_null");
 
-/**
- * By default, Wordpress does not highlight the menu if you are currently viewing a single blog post
- *
- * @ignore
- */
-function highlight_single_post_blog( $classes, $item ) {
-  if (is_single() && !is_product() && $item->title == "Blog") {
-    $classes[] = "current_page_item";
-  }
-  return $classes;
-}
 
-add_filter("nav_menu_css_class", "highlight_single_post_blog", 10, 2);
+remove_filter("the_content", "wpautop");
+remove_filter("acf_the_content", "wpautop");
+
+remove_filter("the_content", "wptexturize");
+remove_filter("the_content", "convert_chars");
 
 
 /**
@@ -107,3 +106,17 @@ function my_image_resize_dimensions( $nonsense, $orig_w, $orig_h, $dest_w, $dest
 }
 
 add_filter("image_resize_dimensions", "my_image_resize_dimensions", 1, 6);
+
+
+/**
+ * Return better classes when inserting images via wordpress content editor
+ */
+function get_image_tag_classes($classes) {
+  list($align, $size, $id) = explode(" ", $classes);
+
+  $size = str_replace("size-", "", $size);
+
+  return "img $align img__$size";
+}
+
+add_filter("get_image_tag_class", "get_image_tag_classes");

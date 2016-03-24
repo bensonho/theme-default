@@ -4,6 +4,7 @@
  * @package helpers/tag
  */
 
+
 /**
  * Outputs a html link
  *
@@ -29,8 +30,8 @@ function link_to($text, $url, $options = null) {
  * @param string $language_code the language code of the website
  *
  */
-function get_url($url, $language_code = ICL_LANGUAGE_CODE) {
-  return get_site_url() . "/$language_code/" . $url;
+function get_url($url = "") {
+  return get_site_url() . $url;
 }
 
 
@@ -41,24 +42,24 @@ function get_url($url, $language_code = ICL_LANGUAGE_CODE) {
  * @param string $language_code the language code of the website
  *
  */
-function url($url, $language_code = ICL_LANGUAGE_CODE) {
-  echo get_url($url, $language_code);
+function url($url = "") {
+  echo get_url($url);
 }
 
 
 /**
  * Returns the base URL
  */
-function get_base() {
-  return get_template_directory_uri();
+function get_base($url = "") {
+  return get_template_directory_uri() . $url;
 }
 
 
 /**
  * Outputs the base path of the website
  */
-function base() {
-  echo get_base();
+function base($url = "") {
+  echo get_base($url);
 }
 
 
@@ -93,7 +94,7 @@ function get_img_tag($image, $options = null) {
     return "<div class='image' style='background-image: url($url)'></div>";
   }
   else {
-    return "<img src='$url'>";
+    return "<img src='$url' class='img'>";
   }
 }
 
@@ -109,9 +110,6 @@ function get_img_tag($image, $options = null) {
 function get_img_url($images, $size) {
   if (empty($images)) {
     return;
-  }
-  else if (is_array($images)) {
-    return is_assoc($images) ? $images["sizes"][$size] : $images[0]["sizes"][$size];
   }
   else {
     return $images;
@@ -134,13 +132,48 @@ function svg($url) {
  *
  * @param string $url the url of the svg
  */
-function get_svg($url) {
-  $png = str_replace(".svg", ".png", $url);
-  echo getcwd();
-  $output  = "<!--[if gte IE 9]><!-->";
-  $output .= file_get_contents($url, true);
-  $output .= "<![endif]-->";
-  $output .= "<!--[if lte IE 8]><img src='/$png' class='svg_png'><![endif]-->";
+function get_svg($url, $dimensions = null) {
 
-  return $output;
+  $theme_dir = get_base();
+
+  $png = str_replace(".svg", ".png", $url);
+
+  $width  = isset($dimensions) ? $dimensions[0] : "";
+  $height = isset($dimensions) ? $dimensions[1] : "";
+
+  $return  = "<!--[if gte IE 9]><!-->";
+  $return .= file_get_contents("$theme_dir/$url", true);
+  $return .= "<![endif]-->";
+  $return .= "<!--[if lte IE 8]><img width='$width' height='$height' src='$theme_dir/$png' class='svg_png'><![endif]-->";
+
+  return $return;
 }
+
+
+/**
+ *
+ */
+function get_background_img($url = null) {
+  $return = "";
+
+  if (empty($url)) {
+    $url = get_the_thumbnail_url($post->ID);
+  }
+
+  if (!empty($url)) {
+    $return = " style='background-image: url($url)'";
+  }
+
+  return $return;
+}
+
+
+
+/**
+ *
+ */
+function background_img($url = null) {
+  // TODO: have it so that if there are no arguments, grab the image from the current post
+  echo get_background_img($url);
+}
+
