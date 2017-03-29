@@ -1,0 +1,10 @@
+index:
+
+  # Application
+  - helpers
+  - application
+
+ie:
+  - html5shiv
+  - respond
+  - ie-message
