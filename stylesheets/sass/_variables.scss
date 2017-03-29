@@ -1,34 +1,20 @@
 // Colors
-$dark-color:       #16131b;
-$light-color:      #ffffff;
+$dark-color:  #16131b;
+$base-color:  #666666;
+$light-color: #ffffff;
 
-$base-color:       #868686;
-$dark-base-color:  #1f2933;
-$selected-color:   #eb966d;
-$hover-color:      #f2b399;
-$visited-color:    #b35230;
-$error-color:      #9a1513;
-$success-color:    #0f740a;
-$border-color:     #ffffff;
+$alt-color:   #fdcb00;
+$hover-color: #fdcb00;
 
-$link-color:       $selected-color;
-$link-hover-color: $hover-color;
-
-
-$footer-bg-color: #131215;
-
+// Division
 $grid-columns: 12;
-
-
-// Font
-$header-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$serif-font-family: $base-font-family;
-$base-font-size: 15px;
-$base-line-height: 27px;
 
 // Grids
 $grid-gutter-width: 40px;
+
+// Fonts
+$base-font: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$alt-font:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 // Responsive screen widths
 $screen-xs: 480px;

@@ -1,0 +1,38 @@
+<?php
+
+/**
+ *
+ */
+function dt_add_featured_image_column_head( $defaults ) {
+
+	$ordered = array();
+
+	foreach ( $defaults as $key => $value ) {
+		if ( 'title' === $key ) {
+			$ordered['featured_image'] = ' ';
+		}
+		$ordered[ $key ] = $value;
+	}
+
+	return $ordered;
+}
+
+/**
+ *
+ */
+function dt_add_featured_image_column( $column_name, $post_id ) {
+	if ( 'featured_image' === $column_name ) {
+		$featured_image_url = get_the_featured_image_url( $post_id, 'thumbnail' );
+
+		if ( $featured_image_url ) {
+			e( "<img src=$featured_image_url width=50 />" );
+		}
+	}
+}
+
+/**
+ *
+ */
+function dt_add_featured_image_column_style() {
+	echo '<style type="text/css">#featured_image { width: 50px; }</style>';
+}

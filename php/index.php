@@ -3,8 +3,8 @@
  * Default Page
  *
  * @package WordPress
- * @subpackage
  */
+
 ?>
 
 <?php get_header() ?>

@@ -1,0 +1,21 @@
+// Mirrors the look and feel of the website inside the Tiny MCE WYSIWYG
+
+@import "fonts";
+
+.mce-content-body {
+  @import "variables";
+
+  @import "vendor/bootstrap/variables";
+  @import "vendor/bootstrap/mixins";
+
+  @import "mixins";
+  @import "reset";
+  @import "application";
+  @import "blocks/form";
+
+  @extend .body;
+
+  border: none;
+  font-family: $base-font;
+  padding: 0px;
+}

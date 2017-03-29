@@ -3,7 +3,7 @@
  * Contains a bunch of functions which disable a bunch of unecessary
  * functionality from wordpress
  *
- * @package disable
+ * @package functions/disable
  */
 
 /**
@@ -11,7 +11,7 @@
  *
  * @ignore
  */
-function df_disable_comments_post_types_support() {
+function dt_disable_comments_post_types_support() {
 	$post_types = get_post_types();
 
 	foreach ( $post_types as $post_type ) {
@@ -22,54 +22,41 @@ function df_disable_comments_post_types_support() {
 	}
 }
 
-add_action( 'admin_init', 'df_disable_comments_post_types_support' );
-
-
 /**
  * Close comments on the front-end
  *
  * @ignore
  */
-function df_disable_comments_status() {
+function dt_disable_comments_status() {
 	return false;
 }
-
-add_filter( 'comments_open', 'df_disable_comments_status', 20, 2 );
-add_filter( 'pings_open', 'df_disable_comments_status', 20, 2 );
-
 
 /**
  * Hide existing comments
  *
  * @ignore
  */
-function df_disable_comments_hide_existing_comments( $comments ) {
+function dt_disable_comments_hide_existing_comments( $comments ) {
 	$comments = array();
 
 	return $comments;
 }
-
-add_filter( 'comments_array', 'df_disable_comments_hide_existing_comments', 10, 2 );
-
 
 /**
  * Remove comments page in menu
  *
  * @ignore
  */
-function df_disable_comments_admin_menu() {
+function dt_disable_comments_admin_menu() {
 	remove_menu_page( 'edit-comments.php' );
 }
-
-add_action( 'admin_menu', 'df_disable_comments_admin_menu' );
-
 
 /**
  * Redirect any user trying to access comments page
  *
  * @ignore
  */
-function df_disable_comments_admin_menu_redirect() {
+function dt_disable_comments_admin_menu_redirect() {
 	global $pagenow;
 
 	if ( $pagenow === 'edit-comments.php' ) {
@@ -78,66 +65,50 @@ function df_disable_comments_admin_menu_redirect() {
 	}
 }
 
-add_action( 'admin_init', 'df_disable_comments_admin_menu_redirect' );
-
-
 /**
  * Remove comments metabox from dashboard
  *
  * @ignore
  */
-function df_disable_comments_dashboard() {
+function dt_disable_comments_dashboard() {
 	remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'normal' );
 }
-
-add_action( 'admin_init', 'df_disable_comments_dashboard' );
-
 
 /**
  * Remove comments links from admin bar
  *
  * @ignore
  */
-function df_disable_comments_admin_bar() {
+function dt_disable_comments_admin_bar() {
 	if ( is_admin_bar_showing() ) {
 		remove_action( 'admin_bar_menu', 'wp_admin_bar_comments_menu', 60 );
 	}
 }
-
-add_action( 'init', 'df_disable_comments_admin_bar' );
-
 
 /**
  * Disable custom fields
  *
  * @ignore
  */
-function customize_meta_boxes() {
+function dt_customize_meta_boxes() {
 	remove_meta_box( 'postcustom', 'post', 'normal' );
 }
-
-add_action( 'admin_init', 'customize_meta_boxes' );
-
 
 /**
  * Disable categories
  *
  * @ignore
  */
-function disable_categories() {
+function dt_disable_categories() {
 	register_taxonomy( 'category', array() );
 }
-
-add_action( 'init', 'disable_categories' );
-
 
 /**
  * Remove tags functionality across the board
  *
  * @ignore
  */
-function remove_tags(){
+function dt_remove_tags() {
 	register_taxonomy( 'post_tag', array() );
 }
 
-// add_action( 'init', 'remove_tags' );

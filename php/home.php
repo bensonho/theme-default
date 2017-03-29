@@ -1,3 +1,11 @@
+<?php
+/**
+ * Home
+ *
+ * @package WordPress
+ */
+
+?>
 
 <?php get_header() ?>
 

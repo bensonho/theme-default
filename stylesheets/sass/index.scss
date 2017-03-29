@@ -2,19 +2,20 @@
 @import "variables";
 
 // Libraries
-@import "lib/bootstrap/variables";
-@import "lib/bootstrap/mixins";
+@import "vendor/bootstrap/variables";
+@import "vendor/bootstrap/mixins";
 
-// Spec styles
+// Resets
 @import "mixins";
 @import "reset";
 @import "application";
 
-@import "blocks/form";
+// Blocks
 @import "blocks/header";
-@import "blocks/footer";
-@import "blocks/menus";
+@import "blocks/navigation";
 @import "blocks/sections";
+@import "blocks/form";
+@import "blocks/footer";
 
 // Internet explorer
 @import "ie/ie";

@@ -1,4 +1,4 @@
-// Responsive
+// Responsive media queries.
 @mixin phone {
   @media (max-width: $screen-phone) {
     @content;
@@ -22,7 +22,6 @@
     @content;
   }
 }
-
 
 @mixin portrait {
   @media screen and (min-aspect-ratio: 9/16) {
@@ -87,14 +86,6 @@
     margin-left: -10px;
   }
 }
-
-// Create shortcut column classes
-@for $i from 1 to $grid-columns {
-  .col-#{$i} {
-    @include make-sm-column($i);
-  }
-}
-
 
 .col {
   &-sixth {

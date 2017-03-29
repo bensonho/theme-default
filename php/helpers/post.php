@@ -1,64 +1,86 @@
 <?php
-
 /**
  * Post related helpers
+ *
  * @package helpers/post
  */
 
 /**
  * Find a page by its slug
  *
- * @param $slug slug to search against
- * @param $post_type post type to search against
+ * @param string $slug slug to search against.
+ * @param string $post_type post type to search against.
  */
 function get_post_by_slug( $slug, $post_type = 'page' ) {
-	$args = array( 'name' => $slug, 'post_type' => $post_type, 'posts_per_page' => 1 );
-
-	$posts = get_posts( $args );
+	$posts = get_posts( array(
+		'name'           => $slug,
+		'post_type'      => $post_type,
+		'posts_per_page' => 1,
+	) );
 
 	return empty( $posts ) ? null : $posts[0];
 }
 
 /**
+ * Get all the children of a page
  *
- */
-function get_post_content_by_slug( $slug, $post_type = 'page' ) {
-	$current_post = get_post_by_slug( $slug, $post_type );
-
-	return isset( $current_post ) ? $post->post_content : '';
-}
-
-/**
- *
- */
-function post_content_by_slug( $slug, $post_type = 'page' ) {
-	echo get_post_content_by_slug( $slug, $post_type );
-}
-
-/**
- * Get all the children of a page.
- *
- * @param $parent_id parent id to search against.
- * @param $post_type post type to search against.
+ * @param integer $parent_id parent id to search against.
+ * @param string  $post_type post type to search against.
  */
 function get_post_children( $parent_id, $post_type = 'page' ) {
-	$args = array(
+	$posts = get_posts( array(
 		'order'          => 'asc',
 		'orderby'        => 'menu_order',
 		'post_parent'    => $parent_id,
 		'post_type'      => $post_type,
 		'posts_per_page' => -1,
-	);
-
-	$posts = get_posts( $args );
+	) );
 
 	return empty( $posts ) ? null : $posts;
 }
 
 /**
+ * Verifies a post by comparing it's slug
+ *
+ * @param string $slug Slug to compare.
+ * @param object $post_object Post to compare.
+ */
+function is_post_slug( $slug, $post_object = null ) {
+	global $post;
+
+	$post_object = empty( $post_object ) ? $post_object : $post;
+
+	if ( empty( $post_object ) ) {
+		return false;
+	}
+
+	return $post_object->post_name === $slug;
+}
+
+/**
+ * Verifies a parent's post by comparing it's slug
+ *
+ * @param string $parent_slug Slug to compare.
+ * @param object $post_object Parent post to compare.
+ */
+function is_parent_slug( $parent_slug, $post_object ) {
+	if ( empty( $post_object ) || 0 === $post_object->post_parent ) {
+		return false;
+	}
+
+	$parent_post = get_post( $post_object->post_parent );
+
+	if ( empty( $parent_post ) ) {
+		return false;
+	}
+
+	return $parent_post->post_name === $parent_slug;
+}
+
+/**
  * Return the categories of a post id
  *
- * @param $post_id Post id to search against.
+ * @param number $post_id Post id to search against.
  */
 function get_categories_by_post_id( $post_id ) {
 	$values = array();
@@ -67,6 +89,7 @@ function get_categories_by_post_id( $post_id ) {
 	foreach ( $categories as $category ) {
 		$category = get_category( $category );
 	}
+
 	return $values;
 }
 
@@ -78,7 +101,7 @@ function get_categories_by_post_id( $post_id ) {
 function get_content( $content = null ) {
 	global $post;
 
-	$page = isset( $page ) ? $page : $post;
+	$page    = isset( $page ) ? $page : $post;
 	$content = isset( $content ) ? $content : $page->post_content;
 
 	return do_shortcode( $content );
@@ -101,18 +124,19 @@ function content( $content = null ) {
 function get_the_page( $page = null ) {
 	global $post;
 
-	$return     = '';
-	$page       = isset( $page ) ? $page : $post;
-	$title      = $page->post_title;
-	$breadcrumb = get_breadcrumb( $page );
-	$slug       = $page->post_name;
+	$page  = isset( $page ) ? $page : $post;
+	$title = $page->post_title;
+	$text  = '';
+	$slug  = $page->post_name;
 
 	if ( function_exists( 'get_field' ) ) {
 		$content = get_field( 'content', $page->ID );
-		$return  = get_acf_page( $content );
+		$text = get_acf_page( $content );
 	} else {
-		$return = get_content( $page->post_content );
+		$text = get_content( $page->post_content );
 	}
+
+	$return = $text;
 
 	return strip( $return );
 }
@@ -123,59 +147,98 @@ function get_the_page( $page = null ) {
  * @param page $page The page. If a page is not provided, the global post will be attempted to be found.
  */
 function page( $page = null ) {
-	echo get_the_page( $page );
+	e( get_the_page( $page ) );
 }
 
 /**
  *
  */
 function featured_image( $size = '', $block_name = '' ) {
-	echo get_the_thumbnail( null, $size, $block_name );
+	e( get_the_thumbnail( null, $size, $block_name ) );
 }
 
 /**
  *
  */
 function the_thumbnail( $size = '', $block_name = '' ) {
-	echo get_the_thumbnail( null, $size, $block_name );
+	e( get_the_thumbnail( null, $size, $block_name ) );
 }
 
 /**
  *
  */
 function get_the_thumbnail( $post_id, $size = '', $block_name = '' ) {
-	$return    = '';
-	$image_url = get_the_thumbnail_url( $post_id, $size );
+	$return     = '';
+	$class_name = '';
+	$image_url  = get_the_thumbnail_url( $post_id, $size );
 
 	if ( ! empty( $image_url ) ) {
-		$class_name = $size === '' ? '' : " image__{$size}";
+		$class_name .= $size === '' ? '' : " image__{$size}";
 		$class_name .= $block_name === '' ? '' : " {$block_name}__image";
 
 		$return = "<img src='$image_url' class='image $class_name'>";
 	}
 
-	return strip( $return );
+	return $return;
 }
 
 /**
  *
  */
 function get_the_thumbnail_url( $post_id, $size = '', $block_name = '' ) {
-	$return       = '';
 	$post_id      = null === $post_id ? get_the_ID() : $post_id;
 	$thumbnail_id = get_post_thumbnail_id( $post_id );
+	$return       = '';
 
 	if ( $thumbnail_id ) {
-		$image  = wp_get_attachment_image_src( $thumbnail_id, $size );
+		$image = wp_get_attachment_image_src( $thumbnail_id, $size );
 		$return = $image[0];
 	}
 
-	return strip( $return );
+	return $return;
 }
 
 /**
  *
  */
 function thumbnail_url( $post_id, $size = '' ) {
-	echo get_the_thumbnail_url( $post_id, $size = '' );
+	e( get_the_thumbnail_url( $post_id, $size = '' ) );
+}
+
+/**
+ *
+ * @todo Evaluate the the_tags WP function and see how it compares.
+ */
+function tags() {
+	$tags = get_tags();
+
+	if ( ! empty( $tags ) ) {
+		$return  = "
+		<ul class='tags'>
+			<li class='tag__item'>
+				<a class='tag__link' href='/whats-new/'>View All</a>
+			</li>";
+
+		foreach ( $tags as $tag ) {
+			$name = $tag->name;
+			$slug = $tag->slug;
+
+			$selected      = '';
+			$selected_link = '';
+
+			if ( $tag->term_id === get_queried_object()->term_id ) {
+				$selected      = 'tag__item--selected';
+				$selected_link = 'tag__link--selected';
+			}
+
+			$return .= "
+			<li class='tag__item $selected'>
+				<a class='tag__link $selected_link' href='/whats-new/tags/$slug'>$name</a>
+			</li>";
+		}
+
+		$return .= '</ul>';
+
+		e( strip( $return ) );
+	}
 }

@@ -2,46 +2,5 @@
 }
 
 .section {
-  border: 15px #fff solid;
-  position: relative;
-
-  @include phone {
-    border: none;
-  }
-
-  &__heading {
-    color: $dark-base-color;
-    font-size: 40px;
-    line-height: 50px;
-    margin-bottom: 50px;
-    text-align: center;
-  }
-  &__subheading {
-    text-align: center;
-  }
-  &__map {
-    width: 100%;
-    height: 400px;
-  }
-
-  &--fullscreen {
-    display: table;
-    table-layout: fixed;
-    padding: 0px;
-    width: 100%;
-
-    &:before,
-    &:after {
-      content: "";
-      display: table-cell;
-    }
-
-    .section__container {
-      display: table-cell;
-      position: relative;
-      vertical-align: middle;
-      width: $screen-desktop;
-    }
-  }
 }
 

@@ -16,15 +16,14 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ) ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<!--[if lt IE 9]>
+	<script charset="utf-8" type="text/javascript" src="<?php base() ?>ie.js"></script>
+	<![endif]-->
+
 	<?php wp_meta() ?>
 	<?php wp_head() ?>
 
-	<!--[if lt IE 9]>
-	<script type="text/javascript" src="<?php echo get_site_url() ?>/ie.js"></script>
-	<![endif]-->
-	<!--[if lt IE 8]>
-	<script>window.onload=function(){e("/images/ie/")}</script>
-	<![endif]-->
+	<?php require_once( 'partials/favicons.php' ) ?>
 </head>
 <body>
 <header>

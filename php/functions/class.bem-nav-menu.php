@@ -1,19 +1,28 @@
 <?php
+/**
+ *
+ *
+ * @package helpers/bem-nav-menu
+ */
+
 
 /**
  * Overriding the default wordpress menu to provide BEM style class names
  */
 class BEM_Nav_Menu extends Walker_Nav_Menu {
 
-	/**
-	 *
-	 */
 	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-		$slug       = slugify( $item->title );
-		$block_name = $args->menu_class;
+		global $post;
 
-		$selected_item = ' ';
-		$selected_link = ' ';
+		$slug       = slugify( $item->title );
+		$block_name = ! empty( $args->menu_class ) ? $args->menu_class : '';
+
+		$selected_item = '';
+		$selected_link = '';
+
+		if ( empty( $item->classes ) ) {
+			return '';
+		}
 
 		if ( array_search( 'current-menu-item', $item->classes ) ) {
 			$selected_item = "$block_name-item--selected";
@@ -25,14 +34,19 @@ class BEM_Nav_Menu extends Walker_Nav_Menu {
 			$selected_link .= " $block_name-link-parent--selected";
 		}
 
+		if ( array_search( 'menu-item-has-children', $item->classes ) ) {
+			$selected_item .= " $block_name-item-has-children";
+			$selected_link .= " $block_name-link-has-children";
+		}
+
 		$output .= "<li class='$block_name-item $block_name-item-$slug $selected_item'>";
 
 		$atts = array();
-		$atts['target'] = ! empty( $item->target ) ? $item->target : '';
-		$atts['rel']    = ! empty( $item->xfn )    ? $item->xfn    : '';
-		$atts['href']   = ! empty( $item->url )    ? $item->url    : '';
-		// TODO: add $block_name-link-$slug as an ID instead of class.
-		$atts['class']  = "$block_name-link $block_name-link-$slug $selected_link";
+		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
+		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+		$atts['class']  = "$block_name-link $block_name-link-$slug $selected_link {$item->classes[0]}";
 
 		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
 
@@ -54,18 +68,12 @@ class BEM_Nav_Menu extends Walker_Nav_Menu {
 		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}
 
-	/**
-	 *
-	 */
 	function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$block_name = $args->menu_class;
 
 		$output .= "<ul class='$block_name-child'>";
 	}
 
-	/**
-	 *
-	 */
 	function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '</ul>';
 	}

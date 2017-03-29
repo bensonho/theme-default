@@ -1,0 +1,41 @@
+.img {
+  margin-bottom: 20px;
+
+  &__alignright {
+    float: right;
+    margin: 0px 0px 20px 20px;
+  }
+  &__alignleft {
+    float: left;
+    margin: 0px 20px 20px 0px;
+  }
+  &__aligncenter {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    text-align: center;
+  }
+}
+
+// WordPress
+.alignnone {
+  margin: 0px 0px 20px 0px;
+}
+
+.alignright {
+  float: right;
+  margin: 0px 0px 20px 20px;
+}
+
+.alignleft {
+  float: left;
+  margin: 0px 20px 20px 0px;
+}
+
+.aligncenter {
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  text-align: center;
+}
+

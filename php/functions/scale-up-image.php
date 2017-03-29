@@ -1,45 +1,4 @@
 <?php
-/**
- * Contains all the overriding of any undesirable default behaviour of wordpress
- * as well as any generic initialising
- *
- * @package reset
- */
-
-/**
- * Perform resets on the initialization of wordpress
- *
- * @ignore
- */
-function initialize_wordpress_app() {
-	// Remove unecessary meta tags.
-	remove_action( 'wp_head', 'wp_generator' );
-	remove_action( 'wp_head', 'wlwmanifest_link' );
-	remove_action( 'wp_head', 'rsd_link' );
-
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-
-	// Enable primary menu.
-	register_nav_menus( array( 'primary' => 'primary' ) );
-
-	// Enable widgets.
-	register_sidebar( array( 'name' => '' ) );
-}
-
-add_action( 'init', 'initialize_wordpress_app', 100 );
-
-// Turn off all plugin update warnings.
-remove_action( 'load-update-core.php', 'wp_update_plugins' );
-add_filter( 'pre_site_transient_update_plugins', '__return_null' );
-
-
-remove_filter( 'the_content', 'wpautop' );
-remove_filter( 'acf_the_content', 'wpautop' );
-
-remove_filter( 'the_content', 'wptexturize' );
-remove_filter( 'the_content', 'convert_chars' );
-
 
 /**
  * Wordpress has an issue in which uploaded images are not scaled up
@@ -50,14 +9,14 @@ remove_filter( 'the_content', 'convert_chars' );
  *
  * @ignore
  */
-function my_image_resize_dimensions( $nonsense, $orig_w, $orig_h, $dest_w, $dest_h, $crop = false) {
+function dt_scale_up_image( $nonsense, $orig_w, $orig_h, $dest_w, $dest_h, $crop = false) {
 	if ( $crop ) {
 		// crop the largest possible portion of the original image that we can size to $dest_w x $dest_h.
 		$aspect_ratio = $orig_w / $orig_h;
 		$new_w = min( $dest_w, $orig_w );
 		$new_h = min( $dest_h, $orig_h );
 
-		if ( !$new_w ) {
+		if ( ! $new_w ) {
 			$new_w = intval( $new_h * $aspect_ratio );
 		}
 
@@ -106,18 +65,5 @@ function my_image_resize_dimensions( $nonsense, $orig_w, $orig_h, $dest_w, $dest
 	return array( 0, 0, (int) $s_x, (int) $s_y, (int) $new_w, (int) $new_h, (int) $crop_w, (int) $crop_h );
 }
 
-add_filter( 'image_resize_dimensions', 'my_image_resize_dimensions', 1, 6 );
+add_filter( 'image_resize_dimensions', 'dt_scale_up_image', 1, 6 );
 
-
-/**
- * Return better classes when inserting images via wordpress content editor
- */
-function get_image_tag_classes( $classes ) {
-	list( $align, $size, $id ) = explode( ' ', $classes );
-
-	$size = str_replace( 'size-', '', $size );
-
-	return "img $align img__$size";
-}
-
-add_filter( 'get_image_tag_class', 'get_image_tag_classes' );
