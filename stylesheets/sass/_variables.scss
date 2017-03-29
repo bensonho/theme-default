@@ -27,16 +27,11 @@ $serif-font-family: $base-font-family;
 $base-font-size: 15px;
 $base-line-height: 27px;
 
-
 // Grids
 $grid-gutter-width: 40px;
 
-
-// $screem-mobile:    960px;
-// $screem-tablet:    960px;
-$screen-desktop:    1000px;
-$screen-lg-desktop: 1600px;
-
-
-// z-index for Magnific javascript plugin
-$mfp-z-index-base: 10100;
+// Responsive screen widths
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 1170px;
+$screen-lg: 1600px;
