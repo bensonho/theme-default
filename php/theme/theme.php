@@ -10,7 +10,7 @@
  * @ignore
  */
 function wp_dequeue_scripts() {
-  // wp_dequeue_script("");
+	// wp_dequeue_script("");
 }
 
 add_action("wp_print_scripts", "wp_dequeue_scripts", 100);
@@ -21,7 +21,7 @@ add_action("wp_print_scripts", "wp_dequeue_scripts", 100);
  * @ignore
  */
 function wp_dequeue_styles() {
-  // wp_dequeue_style("");
+	// wp_dequeue_style("");
 }
 
 add_action("wp_print_styles", "wp_dequeue_styles", 100);
@@ -32,13 +32,13 @@ add_action("wp_print_styles", "wp_dequeue_styles", 100);
  * @ignore
  */
 function custom_image_sizes() {
-  return array(
-    "thumbnail" => __("Thumbnail"),
-    "small"     => __("Small"),
-    "medium"    => __("Medium"),
-    "large"     => __("Large"),
-    "full"      => __("Original")
-  );
+	return array(
+		"thumbnail" => __("Thumbnail"),
+		"small"     => __("Small"),
+		"medium"    => __("Medium"),
+		"large"     => __("Large"),
+		"full"      => __("Original")
+	);
 }
 
 add_filter("image_size_names_choose", "custom_image_sizes");

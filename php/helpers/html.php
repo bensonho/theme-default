@@ -14,12 +14,12 @@
  *
  */
 function link_to($text, $url, $options = null) {
-  global $translations;
+	global $translations;
 
-  $class  = isset($options["class"]) ? "class={$options['class']}" : "";
-  $target = isset($options["target"]) ? "target={$options['target']}" : "";
+	$class  = isset($options["class"]) ? "class={$options['class']}" : "";
+	$target = isset($options["target"]) ? "target={$options['target']}" : "";
 
-  echo "<a href='$url' $class $target>$text</a>";
+	echo "<a href='$url' $class $target>$text</a>";
 }
 
 
@@ -31,7 +31,7 @@ function link_to($text, $url, $options = null) {
  *
  */
 function get_url($url = "") {
-  return get_site_url() . $url;
+	return get_site_url() . $url;
 }
 
 
@@ -43,7 +43,7 @@ function get_url($url = "") {
  *
  */
 function url($url = "") {
-  echo get_url($url);
+	echo get_url($url);
 }
 
 
@@ -51,7 +51,7 @@ function url($url = "") {
  * Returns the base URL
  */
 function get_base($url = "") {
-  return get_template_directory_uri() . $url;
+	return get_template_directory_uri() . $url;
 }
 
 
@@ -59,7 +59,7 @@ function get_base($url = "") {
  * Outputs the base path of the website
  */
 function base($url = "") {
-  echo get_base($url);
+	echo get_base($url);
 }
 
 
@@ -72,7 +72,7 @@ function base($url = "") {
  * @todo Reevaluate this function
  */
 function img_tag($image, $options = null) {
-  echo get_img_tag($image, $options);
+	echo get_img_tag($image, $options);
 }
 
 
@@ -85,17 +85,17 @@ function img_tag($image, $options = null) {
  * @todo Reevaluate this function
  */
 function get_img_tag($image, $options = null) {
-  $image_size  = isset($options["image_size"]) ? $options["image_size"] : "large";
-  $render_div  = isset($options["render_div"]) && $options["render_div"] == true;
+	$image_size  = isset($options["image_size"]) ? $options["image_size"] : "large";
+	$render_div  = isset($options["render_div"]) && $options["render_div"] == true;
 
-  $url = get_img_url($image, $image_size);
+	$url = get_img_url($image, $image_size);
 
-  if ($render_div) {
-    return "<div class='image' style='background-image: url($url)'></div>";
-  }
-  else {
-    return "<img src='$url' class='img'>";
-  }
+	if ($render_div) {
+		return "<div class='image' style='background-image: url($url)'></div>";
+	}
+	else {
+		return "<img src='$url' class='img'>";
+	}
 }
 
 
@@ -108,12 +108,12 @@ function get_img_tag($image, $options = null) {
  * @todo Reevaluate this function
  */
 function get_img_url($images, $size) {
-  if (empty($images)) {
-    return;
-  }
-  else {
-    return $images;
-  }
+	if (empty($images)) {
+		return;
+	}
+	else {
+		return $images;
+	}
 }
 
 
@@ -123,7 +123,7 @@ function get_img_url($images, $size) {
  * @param string $url the url of the svg
  */
 function svg($url) {
-  echo get_svg($url);
+	echo get_svg($url);
 }
 
 
@@ -134,19 +134,19 @@ function svg($url) {
  */
 function get_svg($url, $dimensions = null) {
 
-  $theme_dir = get_base();
+	$theme_dir = get_base();
 
-  $png = str_replace(".svg", ".png", $url);
+	$png = str_replace(".svg", ".png", $url);
 
-  $width  = isset($dimensions) ? $dimensions[0] : "";
-  $height = isset($dimensions) ? $dimensions[1] : "";
+	$width  = isset($dimensions) ? $dimensions[0] : "";
+	$height = isset($dimensions) ? $dimensions[1] : "";
 
-  $return  = "<!--[if gte IE 9]><!-->";
-  $return .= file_get_contents("$theme_dir/$url", true);
-  $return .= "<![endif]-->";
-  $return .= "<!--[if lte IE 8]><img width='$width' height='$height' src='$theme_dir/$png' class='svg_png'><![endif]-->";
+	$return  = "<!--[if gte IE 9]><!-->";
+	$return .= file_get_contents("$theme_dir/$url", true);
+	$return .= "<![endif]-->";
+	$return .= "<!--[if lte IE 8]><img width='$width' height='$height' src='$theme_dir/$png' class='svg_png'><![endif]-->";
 
-  return $return;
+	return $return;
 }
 
 
@@ -154,17 +154,17 @@ function get_svg($url, $dimensions = null) {
  *
  */
 function get_background_img($url = null) {
-  $return = "";
+	$return = "";
 
-  if (empty($url)) {
-    $url = get_the_thumbnail_url($post->ID);
-  }
+	if (empty($url)) {
+		$url = get_the_thumbnail_url($post->ID);
+	}
 
-  if (!empty($url)) {
-    $return = " style='background-image: url($url)'";
-  }
+	if (!empty($url)) {
+		$return = " style='background-image: url($url)'";
+	}
 
-  return $return;
+	return $return;
 }
 
 
@@ -173,7 +173,7 @@ function get_background_img($url = null) {
  *
  */
 function background_img($url = null) {
-  // TODO: have it so that if there are no arguments, grab the image from the current post
-  echo get_background_img($url);
+	// TODO: have it so that if there are no arguments, grab the image from the current post
+	echo get_background_img($url);
 }
 

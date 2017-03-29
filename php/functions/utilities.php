@@ -12,10 +12,10 @@
  * @param object $value The value to output
  */
 function o($value) {
-  echo "<pre>";
-  print_r($value);
-  echo "</pre>";
-  // var_dump($value);
+	echo "<pre>";
+	print_r($value);
+	echo "</pre>";
+	// var_dump($value);
 }
 
 
@@ -23,21 +23,21 @@ function o($value) {
  *
  */
 function strip($text) {
-  $text = preg_replace('/\s+/', ' ', $text);
+	$text = preg_replace('/\s+/', ' ', $text);
 
-  return $text;
+	return $text;
 }
 
 
 function get_body_id() {
-  $url = "body-" . str_replace("/", "", $_SERVER["REQUEST_URI"]);
+	$url = "body-" . str_replace("/", "", $_SERVER["REQUEST_URI"]);
 
-  return $url;
+	return $url;
 }
 
 
 function body_id() {
-  echo get_body_id();
+	echo get_body_id();
 }
 
 
@@ -45,27 +45,27 @@ function body_id() {
  *
  */
 function slugify($text) {
-  // replace non letter or digits by -
-  $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+	// replace non letter or digits by -
+	$text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
-  // trim
-  $text = trim($text, '-');
+	// trim
+	$text = trim($text, '-');
 
-  // transliterate
-  $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+	// transliterate
+	$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 
-  // lowercase
-  $text = strtolower($text);
+	// lowercase
+	$text = strtolower($text);
 
-  // remove unwanted characters
-  $text = preg_replace('~[^-\w]+~', '', $text);
+	// remove unwanted characters
+	$text = preg_replace('~[^-\w]+~', '', $text);
 
-  if (empty($text))
-  {
-    return 'n-a';
-  }
+	if (empty($text))
+	{
+		return 'n-a';
+	}
 
-  return $text;
+	return $text;
 }
 
 
@@ -75,7 +75,7 @@ function slugify($text) {
  * @param array $arr The array to test
  */
 function is_assoc($arr) {
-  return array_keys($arr) !== range(0, count($arr) - 1);
+	return array_keys($arr) !== range(0, count($arr) - 1);
 }
 
 
@@ -85,7 +85,7 @@ function is_assoc($arr) {
  * @param string $name The name of the partial template
  */
 function get_partial($name) {
-  return file_get_contents(locate_template($name));
+	return file_get_contents(locate_template($name));
 }
 
 
@@ -95,7 +95,7 @@ function get_partial($name) {
  * @param string $name The name of the partial template
  */
 function partial($name) {
-  echo get_partial($name);
+	echo get_partial($name);
 }
 
 
@@ -105,52 +105,52 @@ function partial($name) {
  * @param page $page The page
  */
 function get_breadcrumb($page) {
-  $separator = " » ";
-  $output = "";
+	$separator = " » ";
+	$output = "";
 
-  if (!is_front_page()) {
-    // $output .= '<a href="';
-    // $output .= get_option('home');
-    // $output .= '">';
-    // $output .= get_bloginfo('name');
-    // $output .= "</a> ".$separator;
+	if (!is_front_page()) {
+		// $output .= '<a href="';
+		// $output .= get_option('home');
+		// $output .= '">';
+		// $output .= get_bloginfo('name');
+		// $output .= "</a> ".$separator;
 
-    if (is_single()) {
-      // TODO: Handle Blog
-      // $output .= $separator;
-      // $output .= $page->post_title;
-    }
-    elseif (is_page() && $page->post_parent) {
-      $home = get_the_page(get_option('page_on_front'));
-      for ($i = count($page->ancestors)-1; $i >= 0; $i--) {
-        if (($home->ID) != ($page->ancestors[$i])) {
-          $output .=  '<a href="';
-          $output .=  get_permalink($page->ancestors[$i]);
-          $output .=  '">';
-          $output .=  get_the_title($page->ancestors[$i]);
-          $output .=  "</a>".$separator;
-        }
-      }
-      // $output .=  $page->post_title;
-    }
-    elseif (is_page()) {
-      // $output .=  $page->post_title;
-    }
-    elseif (is_404()) {
-      $output .=  "404";
-    }
-  }
+		if (is_single()) {
+			// TODO: Handle Blog
+			// $output .= $separator;
+			// $output .= $page->post_title;
+		}
+		elseif (is_page() && $page->post_parent) {
+			$home = get_the_page(get_option('page_on_front'));
+			for ($i = count($page->ancestors)-1; $i >= 0; $i--) {
+				if (($home->ID) != ($page->ancestors[$i])) {
+					$output .=  '<a href="';
+					$output .=  get_permalink($page->ancestors[$i]);
+					$output .=  '">';
+					$output .=  get_the_title($page->ancestors[$i]);
+					$output .=  "</a>".$separator;
+				}
+			}
+			// $output .=  $page->post_title;
+		}
+		elseif (is_page()) {
+			// $output .=  $page->post_title;
+		}
+		elseif (is_404()) {
+			$output .=  "404";
+		}
+	}
 
-  // Handle Shopping
-  else {
-    $output .= get_bloginfo('name');
-  }
+	// Handle Shopping
+	else {
+		$output .= get_bloginfo('name');
+	}
 
-  if ($output == "") {
-    return;
-  }
+	if ($output == "") {
+		return;
+	}
 
-  return "<div class='breadcrumb'>$output</div>";
+	return "<div class='breadcrumb'>$output</div>";
 }
 
 
@@ -160,7 +160,7 @@ function get_breadcrumb($page) {
  * @param page $page The page
  */
 function breadcrumb($page) {
-  echo get_breadcrumb($page);
+	echo get_breadcrumb($page);
 }
 
 
@@ -168,32 +168,32 @@ function breadcrumb($page) {
  *
  */
 function tags() {
-  $tags = get_tags();
+	$tags = get_tags();
 
-  if (!empty($tags)) {
-    $output = "";
-    $output .= "<ul class='tags'>";
-    $output .= "<li class='tag__item'><a class='tag__link' href='/whats-new/'>View All</a></li>";
+	if (!empty($tags)) {
+		$output = "";
+		$output .= "<ul class='tags'>";
+		$output .= "<li class='tag__item'><a class='tag__link' href='/whats-new/'>View All</a></li>";
 
-    foreach ($tags as $tag) {
-      $name     = $tag->name;
-      $slug     = $tag->slug;
+		foreach ($tags as $tag) {
+			$name     = $tag->name;
+			$slug     = $tag->slug;
 
-      $selected      = "";
-      $selected_link = "";
+			$selected      = "";
+			$selected_link = "";
 
-      if ($tag->term_id == get_queried_object()->term_id) {
-        $selected      = "tag__item--selected";
-        $selected_link = "tag__link--selected";
-      }
+			if ($tag->term_id == get_queried_object()->term_id) {
+				$selected      = "tag__item--selected";
+				$selected_link = "tag__link--selected";
+			}
 
-      $output .= "<li class='tag__item $selected'><a class='tag__link $selected_link' href='/whats-new/tags/$slug'>$name</a></li>";
-    }
+			$output .= "<li class='tag__item $selected'><a class='tag__link $selected_link' href='/whats-new/tags/$slug'>$name</a></li>";
+		}
 
-    $output .= "</ul>";
+		$output .= "</ul>";
 
-    echo "$output";
-  }
+		echo "$output";
+	}
 }
 
 
@@ -203,19 +203,19 @@ function tags() {
  * @todo this function is incomplete
  */
 function get_navigation($menu = "", $class_name = "") {
-  $class_name = $class_name != "" ? $class_name : $menu;
+	$class_name = $class_name != "" ? $class_name : $menu;
 
-  $navigation = wp_nav_menu(array(
-    "menu"            => $menu,
-    "menu_class"      => "navigation__$class_name",
-    "container_id"    => "navigation__$menu",
-    "container_class" => " ",
-    "container"       => "nav",
-    "echo"            => false,
-    "walker"          => new BEM_Nav_Menu
-  ));
+	$navigation = wp_nav_menu(array(
+		"menu"            => $menu,
+		"menu_class"      => "navigation__$class_name",
+		"container_id"    => "navigation__$menu",
+		"container_class" => " ",
+		"container"       => "nav",
+		"echo"            => false,
+		"walker"          => new BEM_Nav_Menu
+	));
 
-  return strip($navigation);
+	return strip($navigation);
 }
 
 
@@ -224,8 +224,8 @@ function get_navigation($menu = "", $class_name = "") {
  *
  * @todo this function is incomplete
  */
-          // %ul.nav.navbar-nav
+					// %ul.nav.navbar-nav
 
 function navigation($menu = "", $class_name = "") {
-  echo get_navigation($menu, $class_name);
+	echo get_navigation($menu, $class_name);
 }

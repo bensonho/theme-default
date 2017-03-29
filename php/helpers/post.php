@@ -12,21 +12,21 @@
  * @param $postType post type to search against
  */
 function get_post_by_slug($slug, $postType = "page") {
-    $args = array("name" => $slug, "post_type" => $postType, "posts_per_page" => 1);
+	$args = array("name" => $slug, "post_type" => $postType, "posts_per_page" => 1);
 
-    $posts = get_posts($args);
+	$posts = get_posts($args);
 
-    return empty($posts) ? null : $posts[0];
+	return empty($posts) ? null : $posts[0];
 }
 
 function get_post_content_by_slug($slug, $postType = "page") {
-    $post = get_post_by_slug($slug, $postType);
+	$post = get_post_by_slug($slug, $postType);
 
-    return isset($post) ? $post->post_content : "";
+	return isset($post) ? $post->post_content : "";
 }
 
 function post_content_by_slug($slug, $postType = "page") {
-    echo get_post_content_by_slug($slug, $postType);
+	echo get_post_content_by_slug($slug, $postType);
 }
 
 /**
@@ -36,16 +36,16 @@ function post_content_by_slug($slug, $postType = "page") {
  * @param $postType post type to search against
  */
 function get_post_children($parent_id, $postType = "page") {
-    $args = array(
-        "post_parent"    => $parent_id,
-        "post_type"      => $postType,
-        "posts_per_page" => -1,
-        "orderby"        => "menu_order",
-        "order"          => "asc");
+	$args = array(
+		"post_parent"    => $parent_id,
+		"post_type"      => $postType,
+		"posts_per_page" => -1,
+		"orderby"        => "menu_order",
+		"order"          => "asc");
 
-    $posts = get_posts($args);
+	$posts = get_posts($args);
 
-    return empty($posts) ? null : $posts;
+	return empty($posts) ? null : $posts;
 }
 
 /**
@@ -54,13 +54,13 @@ function get_post_children($parent_id, $postType = "page") {
  * @param $post_id Post id to search against
  */
 function get_categories_by_post_id($post_id) {
-    $values = array();
-    $categories = wp_get_post_categories($post_id);
+	$values = array();
+	$categories = wp_get_post_categories($post_id);
 
-    foreach ($categories as $category) {
-        $category = get_category($category);
-    }
-    return $values;
+	foreach ($categories as $category) {
+		$category = get_category($category);
+	}
+	return $values;
 }
 
 /**
@@ -69,12 +69,12 @@ function get_categories_by_post_id($post_id) {
  * @param object $content The post content of a page or post
  */
 function get_content($content = null) {
-    global $post;
+	global $post;
 
-    $page = isset($page) ? $page : $post;
-    $content = isset($content) ? $content : $page->post_content;
+	$page = isset($page) ? $page : $post;
+	$content = isset($content) ? $content : $page->post_content;
 
-    return do_shortcode($content);
+	return do_shortcode($content);
 }
 
 /**
@@ -83,7 +83,7 @@ function get_content($content = null) {
  * @param object $content The post content of a page or post
  */
 function content($content = null) {
-    echo get_content($content);
+	echo get_content($content);
 }
 
 /**
@@ -92,29 +92,29 @@ function content($content = null) {
  * @param page $page The page. If a page is not provided, the global post will be attempted to be found.
  */
 function get_the_page($page = null) {
-    global $post;
+	global $post;
 
-    $page = isset($page) ? $page : $post;
-    $title = $page->post_title;
-    $text = "";
-    $breadcrumb = get_breadcrumb($page);
-    $slug = $page->post_name;
+	$page = isset($page) ? $page : $post;
+	$title = $page->post_title;
+	$text = "";
+	$breadcrumb = get_breadcrumb($page);
+	$slug = $page->post_name;
 
-    if (function_exists("get_field")) {
-        $content = get_field("content", $page->ID);
-        $text = get_acf_page($content);
-    }
-    else {
-        $text = get_content($page->post_content);
-    }
+	if (function_exists("get_field")) {
+		$content = get_field("content", $page->ID);
+		$text = get_acf_page($content);
+	}
+	else {
+		$text = get_content($page->post_content);
+	}
 
-    // $text = get_content($page->post_content);
+	// $text = get_content($page->post_content);
 
-    $output = "
-    $text
+	$output = "
+	$text
   ";
 
-    return strip($output);
+	return strip($output);
 }
 
 /**
@@ -123,7 +123,7 @@ function get_the_page($page = null) {
  * @param page $page The page. If a page is not provided, the global post will be attempted to be found.
  */
 function page($page = null) {
-    echo get_the_page($page);
+	echo get_the_page($page);
 }
 
 
@@ -131,7 +131,7 @@ function page($page = null) {
  *
  */
 function featured_image($size = "", $block_name = "") {
-    echo get_the_thumbnail(null, $size, $block_name);
+	echo get_the_thumbnail(null, $size, $block_name);
 }
 
 
@@ -139,7 +139,7 @@ function featured_image($size = "", $block_name = "") {
  *
  */
 function the_thumbnail($size = "", $block_name = "") {
-    echo get_the_thumbnail(null, $size, $block_name);
+	echo get_the_thumbnail(null, $size, $block_name);
 }
 
 
@@ -147,17 +147,17 @@ function the_thumbnail($size = "", $block_name = "") {
  *
  */
 function get_the_thumbnail($post_id, $size = "", $block_name = "") {
-    $output = "";
-    $image_url = get_the_thumbnail_url($post_id, $size);
+	$output = "";
+	$image_url = get_the_thumbnail_url($post_id, $size);
 
-    if (!empty($image_url)) {
-        $class_name.= $size == "" ? "" : " image__{$size}";
-        $class_name.= $block_name == "" ? "" : " {$block_name}__image";
+	if (!empty($image_url)) {
+		$class_name.= $size == "" ? "" : " image__{$size}";
+		$class_name.= $block_name == "" ? "" : " {$block_name}__image";
 
-        $output = "<img src='$image_url' class='image $class_name'>";
-    }
+		$output = "<img src='$image_url' class='image $class_name'>";
+	}
 
-    return $output;
+	return $output;
 }
 
 
@@ -165,16 +165,16 @@ function get_the_thumbnail($post_id, $size = "", $block_name = "") {
  *
  */
 function get_the_thumbnail_url($post_id, $size = "", $block_name = "") {
-    $post_id = null === $post_id ? get_the_ID() : $post_id;
-    $thumbnail_id = get_post_thumbnail_id($post_id);
-    $return = "";
+	$post_id = null === $post_id ? get_the_ID() : $post_id;
+	$thumbnail_id = get_post_thumbnail_id($post_id);
+	$return = "";
 
-    if ($thumbnail_id) {
-        $image = wp_get_attachment_image_src($thumbnail_id, $size);
-        $return = $image[0];
-    }
+	if ($thumbnail_id) {
+		$image = wp_get_attachment_image_src($thumbnail_id, $size);
+		$return = $image[0];
+	}
 
-    return $return;
+	return $return;
 }
 
 
@@ -182,6 +182,6 @@ function get_the_thumbnail_url($post_id, $size = "", $block_name = "") {
  *
  */
 function thumbnail_url($post_id, $size = "") {
-    echo get_the_thumbnail_url($post_id, $size = "");
+	echo get_the_thumbnail_url($post_id, $size = "");
 }
 

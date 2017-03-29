@@ -1,8 +1,8 @@
 </div>
 <footer>
-  <div class="container">
-  </div>
+	<div class="container">
+	</div>
 </footer>
 </body>
-<?php wp_footer(); ?>
+<?php wp_footer() ?>
 </html>
