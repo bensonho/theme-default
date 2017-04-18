@@ -1,11 +1,14 @@
+# Default theme's main javascript file
 index:
   # jQuery
   - jquery-2.2.4.min
 
   # Application
-  - helpers
+  - jquery.helper-functions
   - application
 
+
+# Internet explorer support
 ie:
   - html5shiv
   - respond
