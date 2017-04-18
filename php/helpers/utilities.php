@@ -7,18 +7,31 @@
 
 /**
  *
+ *
+ * @param string $value The string to debug.
+ */
+function d( $value ) {
+	echo '<pre>';
+	print_r( $value );
+	echo '</pre>';
+}
+
+/**
+ *
  */
 function e( $value ) {
 	_e( $value );
 }
 
 /**
+ * Remove all superfluous whitespace in a string.
  *
+ * @param string $value The string to strip.
  */
-function strip( $text ) {
-	$text = preg_replace( '/\s+/', ' ', $text );
+function strip( $value ) {
+	$value = preg_replace( '/\s+/', ' ', $value );
 
-	return $text;
+	return $value;
 }
 
 /**
@@ -38,36 +51,38 @@ function body_id() {
 }
 
 /**
+ * Convert any string into a url slug.
  *
+ * @param string $value The string to slugify.
  */
-function slugify( $text ) {
+function slugify( $value ) {
 	// Replace non letter or digits by dash.
-	$text = preg_replace( '~[^\\pL\d]+~u', '-', $text );
+	$value = preg_replace( '~[^\\pL\d]+~u', '-', $value );
 
-	// Trim the text.
-	$text = trim( $text, '-' );
+	// Trim the value.
+	$value = trim( $value, '-' );
 
 	// Transliterate.
-	$text = iconv( 'utf-8', 'us-ascii//TRANSLIT', $text );
+	$value = iconv( 'utf-8', 'us-ascii//TRANSLIT', $value );
 
 	// Lowercase.
-	$text = strtolower( $text );
+	$value = strtolower( $value );
 
 	// Remove unwanted characters.
-	$text = preg_replace( '~[^-\w]+~', '', $text );
+	$value = preg_replace( '~[^-\w]+~', '', $value );
 
-	if ( empty( $text ) ) {
+	if ( empty( $value ) ) {
 		return 'n-a';
 	}
 
-	return $text;
+	return $value;
 }
 
 /**
- * Determines whether an array is associative or numeric
+ * Determines whether an array is associative or sequential.
  *
- * @param array $arr The array to test.
+ * @param array $value The array to test.
  */
-function is_assoc( $arr ) {
-	return array_keys( $arr ) !== range( 0, count( $arr ) - 1 );
+function is_assoc( $value ) {
+	return array_keys( $value ) !== range( 0, count( $value ) - 1 );
 }

@@ -127,7 +127,7 @@ function get_acf_carousel( $images ) {
 		$img_tag = get_img_tag( $images[0] );
 		$active  = 0 === $i ? 'active' : '';
 
-		$links_output .= "<li data-target='#album' data-slide-to='$i'></li>";
+		$links_output  .= "<li data-target='#album' data-slide-to='$i'></li>";
 		$images_output .= "<div class='item $active'>$img_tag</div>";
 	}
 

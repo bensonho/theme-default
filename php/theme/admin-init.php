@@ -1,8 +1,9 @@
 <?php
 /**
- * Contains all the overriding of any undesirable default behaviour of WordPress
+ * Contains any additional default functionality or overriding of any
+ * undesirable default functionality.
  *
- * @package wp-admin
+ * @package theme/admin-init
  */
 
 /**
@@ -13,8 +14,7 @@
 function dt_wp_admin_init() {
 
 	// Load admin specific styles.
-	wp_register_style( 'custom_wp_admin_css', get_base( '/wp-admin.css' ), false, '1.0.0' );
-	wp_enqueue_style( 'custom_wp_admin_css' );
+	wp_enqueue_style( 'wp-admin', get_base( 'wp-admin/wp-admin.css' ), array(), get_file_version( 'wp-admin/wp-admin.css' ), 'all' );
 
 	// Hide Administrator accounts.
 	add_action( 'pre_user_query', 'hide_administrators' );
@@ -40,3 +40,4 @@ function dt_wp_admin_init() {
 }
 
 add_action( 'admin_init', 'dt_wp_admin_init' );
+

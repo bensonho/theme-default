@@ -13,12 +13,21 @@
  * @todo make the pinterest link optional.
  */
 function dt_gallery( $options ) {
-	$columns       = ! empty( $options['columns'] ) && $options['columns'] <= 4 ? $options['columns'] : 3;
-	$size          = ! empty( $options['size'] ) ? $options['size'] : 'medium';
-	$class_name    = ! empty( $options['class'] ) ? $options['class'] : '';
+	global $post;
+	$columns        = ! empty( $options['columns'] ) && $options['columns'] <= 4 ? $options['columns'] : 3;
+	$size           = ! empty( $options['size'] ) ? $options['size'] : 'medium';
+	$class_name     = ! empty( $options['class'] ) ? $options['class'] : '';
+	$return         = '';
+	$images_output  = '';
+	$column_classes = array(
+		1 => 'full',
+		2 => 'half',
+		3 => 'third',
+		4 => 'quarter',
+	);
 
 	if ( empty( $options['ids'] ) ) {
-		return;
+		return '';
 	}
 
 	$posts = get_posts( array(
@@ -30,19 +39,8 @@ function dt_gallery( $options ) {
 	) );
 
 	if ( empty( $posts ) ) {
-		return;
+		return '';
 	}
-
-	$return        = '';
-	$images_output = '';
-	$column_classes = array(
-		1 => 'full',
-		2 => 'half',
-		3 => 'third',
-		4 => 'quarter',
-	);
-
-	global $post;
 
 	$permalink   = get_permalink( $post );
 	$description = $post->post_title . ' – ' . get_bloginfo( 'name' );
@@ -85,12 +83,9 @@ function dt_gallery( $options ) {
 function dt_gallery_slider( $options ) {
 	$columns       = ! empty( $options['columns'] ) ? $options['columns'] : 0;
 	$size          = ! empty( $options['size'] ) ? $options['size'] : 'medium';
-
-	if ( empty( $options['ids'] ) ) {
-		return;
-	}
-
-	$posts = get_posts( array(
+	$return        = '';
+	$images_output = '';
+	$posts         = get_posts( array(
 		'include'        => $options['ids'],
 		'post_type'      => 'attachment',
 		'post_status'    => 'inherit',
@@ -98,16 +93,16 @@ function dt_gallery_slider( $options ) {
 		'orderby'        => 'post__in',
 	) );
 
-	if ( empty( $posts ) ) {
-		return;
+	if ( empty( $options['ids'] ) ) {
+		return '';
 	}
 
-	$return        = '';
-	$images_output = '';
+	if ( empty( $posts ) ) {
+		return '';
+	}
 
 	foreach ( $posts as $image ) {
 		$url = wp_get_attachment_image_src( $image->ID, $size )[0];
-
 		$images_output .= "<img src='$url' class='slide'>";
 	}
 

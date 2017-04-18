@@ -99,5 +99,4 @@ class BEM_Nav_Menu extends Walker_Nav_Menu {
 
 		$output .= "<ul class='$block_name-child'>";
 	}
-
 }

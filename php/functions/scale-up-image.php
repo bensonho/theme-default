@@ -1,4 +1,9 @@
 <?php
+/**
+ *
+ *
+ * @package functions/scale-up-image
+ */
 
 /**
  * Wordpress has an issue in which uploaded images are not scaled up
@@ -6,6 +11,8 @@
  * Scale up images functionality in "Edit image" ...
  * See http://core.trac.wordpress.org/ticket/23713
  * This is slightly changed function image_resize_dimensions() in wp-icludes/media.php
+ *
+ * @package init
  *
  * @ignore
  */

@@ -102,7 +102,7 @@ function theme_path( $url = '' ) {
  *
  * @param string $file_name The name of the file to version.
  */
-function get_version( $file_name ) {
+function get_file_version( $file_name ) {
 	return filemtime( get_theme_path( $file_name ) );
 }
 

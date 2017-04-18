@@ -1,4 +1,8 @@
 <?php
+/**
+ *
+ * @package functions/images
+ */
 
 /**
  *
@@ -38,7 +42,7 @@ function dt_add_featured_image_column_style() {
 }
 
 /**
- * Return better classes when inserting images via wordpress content editor
+ * Return BEM style css class names when inserting images via WordPress content editor
  */
 function dt_get_image_tag_classes( $classes ) {
 	list( $align, $size, $id ) = explode( ' ', $classes );
