@@ -21,29 +21,10 @@ function dt_wp_admin_init() {
 	add_filter( 'editable_roles', 'remove_administrator_role' );
 
 	// Tiny MCE settings.
-	add_filter( 'tiny_mce_before_init',  'dt_tiny_mce_options' );
-	add_filter( 'acf/fields/wysiwyg/toolbars' , 'dt_tiny_mce_acf_options' );
-	add_filter( 'after_wp_tiny_mce', 'dt_tiny_mce_disable_shortcuts' );
 	add_action( 'media_buttons', 'dt_tiny_mce_disable_wp_editor_formatting' );
-
-	// Disable comments.
-	add_action( 'admin_init', 'dt_disable_comments_post_types_support' );
-	add_filter( 'comments_open', 'dt_disable_comments_status', 20, 2 );
-	add_filter( 'pings_open', 'dt_disable_comments_status', 20, 2 );
-	add_filter( 'comments_array', 'dt_disable_comments_hide_existing_comments', 10, 2 );
-	add_action( 'admin_menu', 'dt_disable_comments_admin_menu' );
-	add_action( 'admin_init', 'dt_disable_comments_admin_menu_redirect' );
-	add_action( 'admin_init', 'dt_disable_comments_dashboard' );
-	add_action( 'admin_init', 'dt_disable_comments_admin_bar' );
-
-	// Disable custom fields.
-	add_action( 'admin_init', 'dt_customize_meta_boxes' );
-
-	// Disable categories.
-	add_action( 'admin_init', 'dt_disable_categories' );
-
-	// Disable tags.
-	add_action( 'init', 'remove_tags' );
+	add_filter( 'after_wp_tiny_mce', 'dt_tiny_mce_disable_shortcuts' );
+	add_filter( 'tiny_mce_before_init', 'dt_tiny_mce_options' );
+	add_filter( 'acf/fields/wysiwyg/toolbars', 'dt_tiny_mce_acf_options' );
 
 	// Display post thumbnail in the column.
 	add_filter( 'manage_posts_columns', 'dt_add_featured_image_column_head' );
