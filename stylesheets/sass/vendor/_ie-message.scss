@@ -5,7 +5,7 @@
   position: fixed;
   top: 0px;
   width: 100%;
-  z-index: 100000;
+  z-index: 1000000;
 
   td {
     text-align: center;
@@ -69,8 +69,4 @@
   &--internet-explorer {
     background-image: url(images/ie/internet-explorer.gif);
   }
-}
-
-.ie8 {
-  overflow: hidden;
 }

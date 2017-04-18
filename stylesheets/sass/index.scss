@@ -1,12 +1,16 @@
 // Global variables
+@import "fonts";
 @import "variables";
 
 // Libraries
 @import "vendor/bootstrap/variables";
 @import "vendor/bootstrap/mixins";
+@import "vendor/ie-message";
+
+// Mixins
+@import "mixins/responsive";
 
 // Resets
-@import "mixins";
 @import "reset";
 @import "application";
 
@@ -16,6 +20,3 @@
 @import "blocks/sections";
 @import "blocks/form";
 @import "blocks/footer";
-
-// Internet explorer
-@import "ie/ie";

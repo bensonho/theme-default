@@ -1,0 +1,25 @@
+// Tiny-MCE
+// Used to mirror the look and feel of the public website inside the Tiny MCE WYSIWYG
+// so that the user has an exact idea of what their content will look like.
+
+// Global variables
+@import "../fonts";
+@import "../variables";
+
+// Libraries
+@import "../vendor/bootstrap/variables";
+@import "../vendor/bootstrap/mixins";
+
+// Mixins
+@import "../mixins/responsive";
+
+.mce-content-body {
+  @import "../reset";
+  @import "../application";
+
+  @extend .body;
+
+  border: none;
+  font-family: $base-font;
+  padding: 0px;
+}

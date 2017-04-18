@@ -1,0 +1,30 @@
+// Responsive media queries.
+@mixin phone {
+  @media (max-width: $screen-phone) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $screen-phone) and (max-width: $screen-desktop) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $screen-desktop) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: $screen-lg-desktop) {
+    @content;
+  }
+}
+
+@mixin portrait {
+  @media (max-width: $screen-desktop) and (min-aspect-ratio: 9/16) {
+    @content;
+  }
+}

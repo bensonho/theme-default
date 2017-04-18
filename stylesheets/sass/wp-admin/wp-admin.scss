@@ -1,12 +1,14 @@
-// Styles for WordPress wp-admin pages
+// wp-admin
+// Style overrides for the wp-admin
 
-// Attachment details
+// Hide superfluous attachment details to simplify the UI.
 label.setting[data-setting="caption"],
 label.setting[data-setting="alt"],
 label.setting[data-setting="description"] {
   display: none;
 }
 
+// Advanced custom fields
 .acf-fields > .acf-field {
   padding: 5px;
 }

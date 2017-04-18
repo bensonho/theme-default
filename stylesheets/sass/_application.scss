@@ -1,3 +1,68 @@
+// Layout
+.container {
+  @include container-fixed();
+
+  @include desktop {
+    width: $screen-desktop;
+  }
+  @include large-desktop {
+    width: $screen-lg-desktop;
+  }
+}
+
+.row {
+  @include make-row;
+}
+
+.col {
+  &-sixth {
+    @include make-sm-column(2);
+  }
+
+  &-quarter {
+    @include make-sm-column(3);
+  }
+
+  &-third {
+    @include make-sm-column(4);
+  }
+
+  &-half {
+    @include make-sm-column(6);
+  }
+
+  &-two-thirds {
+    @include make-sm-column(8);
+  }
+
+  &-three-quarters {
+    @include make-sm-column(9);
+  }
+
+  &-full {
+    @include make-sm-column(12);
+  }
+
+  &-centered {
+    display: inline-block;
+    float: none;
+    text-align: left;
+    margin-right: -4px;
+
+    @include phone {
+      float: none;
+    }
+    @include tablet {
+      float: none;
+    }
+    @include desktop {
+      float: none;
+    }
+  }
+}
+
+
+// WordPress classes generated from the WYSIWYG
 .img {
   margin-bottom: 20px;
 
@@ -17,7 +82,6 @@
   }
 }
 
-// WordPress
 .alignnone {
   margin: 0px 0px 20px 0px;
 }
@@ -39,3 +103,13 @@
   text-align: center;
 }
 
+
+// Internet Explorer overrides
+.ie9 {
+}
+
+.ie8 {
+}
+
+.ie {
+}
