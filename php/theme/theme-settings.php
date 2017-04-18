@@ -2,7 +2,7 @@
 /**
  * Functions that only are specific to this theme
  *
- * @package theme-settings
+ * @package theme/theme-settings
  */
 
 /**
@@ -11,6 +11,11 @@
  * @ignore
  */
 function dt_init_theme() {
+	// Create the default menus.
+	register_nav_menus( array(
+		'header' => 'Header',
+		'footer' => 'Footer',
+	) );
 
 }
 

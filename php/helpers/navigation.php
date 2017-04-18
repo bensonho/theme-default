@@ -12,11 +12,12 @@
  * @param string $class_name The class name for the menu.
  */
 function get_navigation( $menu = '', $class_name = '' ) {
-	$class_name = $class_name !== '' ? $class_name : $menu;
+	$class_name = $class_name !== '' ? $class_name : "navigation__$menu";
 
 	$navigation = wp_nav_menu( array(
+		'menu'            => $menu,
 		'theme_location'  => $menu,
-		'menu_class'      => "navigation__$class_name",
+		'menu_class'      => $class_name,
 		'container_id'    => "navigation__$menu",
 		'container_class' => ' ',
 		'container'       => 'ul',
