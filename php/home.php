@@ -9,8 +9,8 @@
 
 <?php get_header() ?>
 
-<div class="row">
-<?php page() ?>
+<div class="sections">
+	<?php page() ?>
 </div>
 
 <?php get_footer() ?>

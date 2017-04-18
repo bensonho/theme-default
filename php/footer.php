@@ -1,4 +1,3 @@
-</div>
 <footer>
 	<div class="container">
 	</div>
@@ -6,4 +5,4 @@
 </body>
 <?php wp_footer() ?>
 </html>
-<?php include 'partials/analytics.php' ?>
+<?php include 'partials/embedded.php' ?>
